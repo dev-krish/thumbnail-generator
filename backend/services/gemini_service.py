@@ -45,4 +45,4 @@ async def generate_thumbnail(prompt: str, style_prompt: str, headshot_url: str) 
     if not interaction.output_images:
         raise ValueError("The model did not return an image.")
         
-    return interaction.output_images[0].image_bytes
+    return interaction.output_images[0].image_bytes 
