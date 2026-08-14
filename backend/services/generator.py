@@ -82,7 +82,7 @@ async def process_job(job_id:str):
         session.commit()
         
         thumbnails = session.exec(
-            select(Thumbnail).where(Thumbnail.job_id == job_id)
+            select(Thumbnail).where(Thumbnail.job_id == job_id).all()
         )
         thumbnails_ids = [t.id for t in thumbnails]
         
@@ -94,5 +94,9 @@ async def process_job(job_id:str):
         
         with Session(engine) as session:
             thumbnails = session.exec(
-                select(Thumbnail).where(Thumbnial.job_id == job_id)
+                select(Thumbnail).where(Thumbnail.job_id == job_id)
             ).all()
+            all_failed = all(t.status=="failed" for t in thumbnails)
+            job = session.get(Job , job_id)
+            session.add(job)
+            session.commit()
